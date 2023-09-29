@@ -1,5 +1,6 @@
 const express = require('express')
 const { hashPassword, comparePassword } = require('./util/login.util')
+const { UserModel } = require('./model/users')
 require('./db')
 const app = express()
 const port = 8080
@@ -21,8 +22,15 @@ const test = async () => {
 
 test();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!!!!!!!!!')
+app.get('/', async (req, res) => {
+  const response = await UserModel.create({
+    name: 'Ninad',
+    email: 'ninadparkar273@gmail.com',
+    password: '123456',
+    userType: 'normal-user',
+  });
+
+  res.send(response)
 })
 
 app.listen(port, () => {
